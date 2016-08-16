@@ -5,15 +5,17 @@ open System
 open System.Web.Http
 open System.Net.Http
 
+open DataAccess.Models
+
 type TestController()  = 
     inherit ApiController()
 
-    [<RouteAttribute("test/get")>]
-    [<HttpGetAttribute>]
+    [<Route("test/get")>]
+    [<HttpGet>]
     member this.Test() = { TestData.ControllerName = "testcontroller"; Id = 4 }
     
-    [<RouteAttribute("test/getHttp")>]
-    [<HttpGetAttribute>]
+    [<Route("test/getHttp")>]
+    [<HttpGet>]
     member this.TestHttpClient() = Async.RunSynchronously (async {
         let httpClient = new HttpClient (BaseAddress = new Uri("http://localhost:48213/"))
         let! response = httpClient.GetAsync("test/get") |> Async.AwaitTask
@@ -24,3 +26,7 @@ type TestController()  =
         let alteredResult = { result with ControllerName = "alteredController" }
         return alteredResult
     })
+    
+    [<Route("test/addCar")>]
+    [<HttpGet>]
+    member this.AddCar(name) = Async.RunSynchronously <| Car.AddAsync name

@@ -4,8 +4,8 @@ open Newtonsoft.Json
 
 [<JsonObject(MemberSerialization=MemberSerialization.OptOut)>]
 type TestData = {
-    [<JsonPropertyAttribute("controllerName")>]
+    [<JsonProperty("controllerName")>]
     ControllerName : string;
 
-    [<JsonPropertyAttribute("id")>]
+    [<JsonProperty("id")>]
     Id : int }
